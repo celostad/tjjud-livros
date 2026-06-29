@@ -10,6 +10,10 @@ class Livro extends Model
     protected $table = 'Livro';
     protected $primaryKey = 'Codl';
 
+    public $timestamps = false;
+    public $incrementing = true;
+    protected $keyType = 'int';
+
     protected $fillable = [
         'Titulo',
         'Editora',

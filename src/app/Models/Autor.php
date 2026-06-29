@@ -10,6 +10,10 @@ class Autor extends Model
     protected $table = 'Autor';
     protected $primaryKey = 'CodAu';
 
+    public $timestamps = false;
+    public $incrementing = true;
+    protected $keyType = 'int';
+
     protected $fillable = ['Nome'];
 
     public function livros(): BelongsToMany

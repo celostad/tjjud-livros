@@ -6,6 +6,14 @@ services:
       dockerfile: docker/php/Dockerfile
     container_name: tjjud_app
     working_dir: /var/www/html
+    command:
+      sh -c "
+        mkdir -p storage/framework/{cache/data,sessions,views,testing} &&
+        mkdir -p storage/logs bootstrap/cache &&
+        chmod -R 775 storage bootstrap/cache &&
+        chown -R www-data:www-data storage bootstrap/cache &&
+        php-fpm
+      "
     volumes:
       - ./src:/var/www/html
       - storage_data:/var/www/html/storage
