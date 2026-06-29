@@ -1,0 +1,72 @@
+services:
+
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: tjjud_app
+    working_dir: /var/www/html
+    command:
+      sh -c "
+        mkdir -p storage/framework/{cache/data,sessions,views,testing} &&
+        mkdir -p storage/logs bootstrap/cache &&
+        chmod -R 775 storage bootstrap/cache &&
+        chown -R www-data:www-data storage bootstrap/cache &&
+        php-fpm
+      "
+    volumes:
+      - ./src:/var/www/html
+      - storage_data:/var/www/html/storage
+      - vendor_data:/var/www/html/vendor
+    networks:
+      - tjjud_net
+
+  webserver:
+    image: httpd:2.4-alpine
+    container_name: tjjud_apache
+    ports:
+      - "8080:80"
+    volumes:
+      - ./src:/var/www/html
+      - ./docker/apache/httpd.conf:/usr/local/apache2/conf/httpd.conf
+      - ./docker/apache/vhost.conf:/usr/local/apache2/conf/extra/vhost.conf
+    networks:
+      - tjjud_net
+    depends_on:
+      - app
+
+  db:
+    image: mysql:8.0
+    container_name: tjjud_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: tjjud_livros
+      MYSQL_USER: tjjud_user
+      MYSQL_PASSWORD: tjjud_pass
+      MYSQL_ROOT_PASSWORD: root_pass
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - tjjud_net
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: tjjud_phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: db
+    depends_on:
+      - db
+    networks:
+      - tjjud_net
+
+networks:
+  tjjud_net:
+
+volumes:
+  mysql_data:
+  storage_data:
+  vendor_data:

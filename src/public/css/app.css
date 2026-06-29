@@ -1,0 +1,122 @@
+/* ===== Cadastro de Livros - TJJUD ===== */
+
+:root {
+    --cor-primaria: #0d47a1;
+    --cor-secundaria: #1565c0;
+    --cor-destaque: #e3f2fd;
+    --fonte-base: 15px;
+}
+
+body {
+    font-size: var(--fonte-base);
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+/* Navbar */
+.navbar {
+    background-color: var(--cor-primaria) !important;
+}
+
+.navbar-brand {
+    font-size: 1.3rem;
+    letter-spacing: 0.5px;
+}
+
+/* Cards */
+.card {
+    border: none;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .1);
+}
+
+.card-header {
+    background-color: var(--cor-primaria);
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: .75rem 1.25rem;
+}
+
+/* Tabelas */
+.table thead th {
+    background-color: var(--cor-primaria);
+    color: #fff;
+    font-size: .85rem;
+    text-transform: uppercase;
+    letter-spacing: .5px;
+    border: none;
+}
+
+.table tbody tr:hover {
+    background-color: var(--cor-destaque);
+}
+
+/* Badges de assunto/autor */
+.badge-assunto {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+    font-size: .78rem;
+}
+
+.badge-autor {
+    background-color: #e3f2fd;
+    color: #1565c0;
+    border: 1px solid #90caf9;
+    font-size: .78rem;
+}
+
+/* Botões de ação */
+.btn-acao {
+    font-size: .82rem;
+    padding: .2rem .55rem;
+}
+
+/* Campo de valor (moeda) */
+.input-valor {
+    text-align: right;
+    font-family: 'Courier New', monospace;
+}
+
+/* Paginação */
+.pagination .page-link {
+    color: var(--cor-primaria);
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--cor-primaria);
+    border-color: var(--cor-primaria);
+}
+
+/* Relatório */
+.relatorio-header {
+    background: linear-gradient(135deg, var(--cor-primaria), var(--cor-secundaria));
+    color: #fff;
+    padding: 1.5rem;
+    border-radius: .5rem;
+    margin-bottom: 1.5rem;
+}
+
+.autor-bloco {
+    border-left: 4px solid var(--cor-primaria);
+    margin-bottom: 1.5rem;
+}
+
+.autor-bloco .autor-nome {
+    background-color: var(--cor-destaque);
+    padding: .5rem 1rem;
+    font-weight: 700;
+    color: var(--cor-primaria);
+    font-size: 1rem;
+}
+
+/* Formulários */
+.form-label {
+    font-weight: 500;
+    font-size: .9rem;
+}
+
+.required-star::after {
+    content: ' *';
+    color: #dc3545;
+}
