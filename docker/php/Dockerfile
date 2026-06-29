@@ -1,41 +1,19 @@
-FROM php:8.3-fpm-alpine
+FROM php:8.3-fpm
 
-# Instalar dependências do sistema
-RUN apk add --no-cache \
-    bash \
-    curl \
-    git \
-    zip \
-    unzip \
-    libzip-dev \
-    oniguruma-dev \
-    libpng-dev \
-    libjpeg-turbo-dev \
-    freetype-dev \
-    icu-dev \
-    libxml2-dev
-
-# Extensões PHP
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
-    && docker-php-ext-install \
-        pdo \
-        pdo_mysql \
-        mbstring \
-        zip \
-        exif \
-        pcntl \
-        bcmath \
-        gd \
-        intl \
-        xml \
-        opcache
+# Dependências básicas
+RUN apt-get update && apt-get install -y \
+    git curl unzip libzip-dev libonig-dev libxml2-dev \
+    && docker-php-ext-install pdo pdo_mysql mbstring zip
 
 # Composer
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Usuário não-root
-RUN addgroup -g 1000 www && adduser -u 1000 -G www -s /bin/bash -D www
-USER www
+WORKDIR /var/www/html
 
-EXPOSE 9000
-CMD ["php-fpm"]
+# Permissões seguras (base)
+RUN usermod -u 1000 www-data
+
+COPY docker/php/entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
