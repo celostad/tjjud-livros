@@ -13,7 +13,12 @@ WORKDIR /var/www/html
 # Permissões seguras (base)
 RUN usermod -u 1000 www-data
 
-COPY docker/php/entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN mkdir -p \
+    /var/www/html/storage/logs \
+    /var/www/html/storage/framework/cache/data \
+    /var/www/html/storage/framework/sessions \
+    /var/www/html/storage/framework/views \
+    /var/www/html/storage/framework/testing \
+    /var/www/html/bootstrap/cache
 
-ENTRYPOINT ["/entrypoint.sh"]
+CMD ["php-fpm"]
