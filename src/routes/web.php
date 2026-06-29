@@ -8,7 +8,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', fn () => redirect()->route('livros.index'))->name('home');
 Route::resource('livros', LivroController::class);
-Route::resource('autores', AutorController::class);
+Route::resource('autores', AutorController::class)
+    ->parameters([
+        'autores' => 'autor',
+    ]);
+
 Route::resource('assuntos', AssuntoController::class);
 
 Route::prefix('relatorio')->name('relatorio.')->group(function () {
